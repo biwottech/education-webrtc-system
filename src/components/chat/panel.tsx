@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import {Message, RoomMessage} from './message';
 import { Input } from '@material-ui/core';
 import {CustomButton} from '../custom-button';
@@ -6,6 +6,7 @@ import './panel.scss';
 import { ChatMessage } from '@/utils/types';
 import { t } from '@/i18n';
 import {observer} from 'mobx-react';
+import { GiphyGrid } from './giphy/giphy-grid';
 
 export interface ChatPanelProps {
   canChat: boolean
@@ -16,6 +17,7 @@ export interface ChatPanelProps {
   handleMute: (evt: any) => Promise<any>
   sendMessage: (evt: any) => void
   handleChange: (evt: any) => void
+  handleSendGifMessage: (gif: any, evt: any) => void
   showRoomName?: boolean
 }
 
@@ -28,6 +30,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
   value,
   sendMessage,
   handleChange,
+  handleSendGifMessage,
   muteControl,
   muteChat,
   handleMute,
@@ -49,6 +52,8 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
     return muteChat
   }, [canChat, muteChat])
 
+  const [showGifWindow, setShowGifWindow] = useState(false);
+
   return (
     <>
       <div className="chat-messages-container">
@@ -56,10 +61,10 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
           {
             showRoomName ? 
             messages.map((item: ChatMessage, key: number) => (
-              <RoomMessage key={key} roomName={item.fromRoomName} role={item.role} nickname={item.account} content={item.text} link={item.link} sender={item.sender} />
+              <RoomMessage key={key} roomName={item.fromRoomName} role={item.role} nickname={item.account} content={item.text} link={item.link} sender={item.sender} gif={item.gif} />
             )) :
             messages.map((item: ChatMessage, key: number) => (
-              <Message key={key} nickname={item.account} content={item.text} role={item.role} link={item.link} sender={item.sender} />
+              <Message key={key} nickname={item.account} content={item.text} role={item.role} link={item.link} sender={item.sender} gif={item.gif} />
             ))
           }
         </div>   
@@ -68,6 +73,15 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
         {muteControl ?
           <div className={`icon ${muteChat ? 'icon-chat-off' : 'icon-chat-on' }`}
             onClick={handleMute}></div> : null}
+        <div className={`icon icon-gif`}
+          onClick={async (evt: any) => {
+            setShowGifWindow(!showGifWindow);
+          }}>Gif</div>
+          <div className={`icon icon-gif`}
+          onClick={async (evt: any) => {
+            setShowGifWindow(!showGifWindow);
+          }}>&#x1F60A;</div>
+        { showGifWindow ? <GiphyGrid onGifClick={handleSendGifMessage} /> : '' }
         <Input
           disabled={canChat ? false : muteChat}
           value={!showText ? value : ''}

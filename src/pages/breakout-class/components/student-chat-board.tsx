@@ -15,7 +15,18 @@ export const StudentChatBoard = observer(() => {
     await breakoutRoomStore.sendMessage(message)
     setValue('')
   }
+  
+  const [gif, setGif] = useState(null);
 
+  const sendGifMessage = async () => {
+    await breakoutRoomStore.sendGifMessage(gif)
+  }
+
+  const handleSendGifMessage = async (gif: any, evt: any) => {
+    await sendGifMessage()
+    setGif(null);
+  }
+  
   const handleChange = (evt: any) => {
     setValue(evt.target.value)
   }
@@ -105,6 +116,7 @@ export const StudentChatBoard = observer(() => {
           messages={breakoutRoomStore.roomChatMessages}
           value={value}
           sendMessage={sendMessage}
+          handleSendGifMessage={handleSendGifMessage}
           handleChange={handleChange} />
       </div>
       <div className={`student-container ${breakoutRoomStore.activeTab !== 'first' ? '' : 'hide'}`}>

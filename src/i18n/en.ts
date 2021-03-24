@@ -157,7 +157,9 @@ const en = {
   'chat': {
     'placeholder': 'Input Message',
     'banned': 'Banned',
-    'send': 'send'
+    'send': 'send',
+    'gif': 'gif',
+    'emoji': 'emoji'
   },
   'device': {
     'camera': 'Camera',

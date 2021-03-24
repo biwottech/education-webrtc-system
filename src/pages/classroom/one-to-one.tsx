@@ -33,6 +33,13 @@ export const OneToOne = observer(() => {
     setChat('')
   }
 
+  const handleSendGifMessage = async (gif: any, evt: any) => {
+    evt?.preventDefault();
+    console.log('gif ', gif);
+    const payload = `gifId:${gif.id}`;
+    console.log('gif payload', payload);
+    await roomStore.sendMessage(payload);
+  }
   
   return (
     <div className="room-container">
@@ -75,6 +82,7 @@ export const OneToOne = observer(() => {
           handleChange={(evt: any) => {
             setChat(evt.target.value)
           }}
+          handleSendGifMessage={handleSendGifMessage}
           messageCount={roomStore.unreadMessageCount}
           muteControl={muteControl}
           muteChat={mutedChat}

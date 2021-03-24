@@ -23,6 +23,7 @@ export const ChatBoard: React.FC<ChatBoardProps> = (props: ChatBoardProps) => {
           messages={props.messages}
           value={props.value}
           handleMute={props.handleMute}
+          handleSendGifMessage={props.handleSendGifMessage}
           sendMessage={props.sendMessage}
           handleChange={props.handleChange} />
     </div>

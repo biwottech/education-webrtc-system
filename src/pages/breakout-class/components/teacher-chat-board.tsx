@@ -17,6 +17,17 @@ export const TeacherChatBoard = observer(() => {
     setValue('')
   }
 
+  const [gif, setGif] = useState(null);
+
+  const sendGifMessage = async () => {
+    await breakoutRoomStore.sendGifMessageToCurrentRoom(gif)
+  }
+
+  const handleSendGifMessage = async (gif: any, evt: any) => {
+    await sendGifMessage()
+    setGif(null);
+  }
+  
   const handleChange = (evt: any) => {
     setValue(evt.target.value)
   }
@@ -128,6 +139,7 @@ export const TeacherChatBoard = observer(() => {
           messages={breakoutRoomStore.roomChatMessages}
           value={value}
           sendMessage={sendToCurrentRoom}
+          handleSendGifMessage={handleSendGifMessage}
           handleChange={handleChange} />
       </div>
     </>

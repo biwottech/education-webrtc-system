@@ -79,6 +79,22 @@
     background: #82C2FF;
   }
 }
+.MuiButtonBase-root.chat-panel-gif-btn {
+  left: 0px;
+  position: absolute;
+  line-height: 15px;
+  margin-left: 7px;
+  text-transform: none;
+  width: 64px;
+  height: 34px;
+  border-radius: 22px;
+  background: #44A2FC;
+  box-shadow: none;
+  &:hover {
+    box-shadow: none;
+    background: #82C2FF;
+  }
+}
 
 .chat-board {
   position: relative;
@@ -159,4 +175,11 @@
       }
     }
   }
+}
+
+.icon-gif {
+  color: gray;
+  margin-top: 6px;
+  font-size: medium;
+  font-family: cursive;
 }

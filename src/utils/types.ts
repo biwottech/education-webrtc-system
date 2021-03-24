@@ -1,7 +1,9 @@
+import { IGif } from '@giphy/js-types';
 export interface ChatMessage {
   account: string
   text: string
   link?: string
+  gif?: IGif,
   ts: number
   id: string
   sender?: boolean

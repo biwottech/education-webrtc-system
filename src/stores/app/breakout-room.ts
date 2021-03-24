@@ -758,6 +758,64 @@ export class BreakoutRoomStore extends SimpleInterval {
   }
 
   @action
+  async sendGifMessageToCurrentRoom(message: any) {
+    if (this.roomInfo.userRole === 'teacher') {
+      try {
+        const fromRoomUuid = this.currentStudentRoomUuid || ''
+        const payload = JSON.stringify({
+          content: message,
+          role: EduRoleTypeEnum.teacher,
+          fromRoomName: this.groupClassroomManager?.roomName || '',
+          fromRoomUuid: fromRoomUuid
+        })
+        await this.largeClassroomManager?.userService.sendRoomChatMessage(payload)
+        this.addChatMessage({
+          id: this.userUuid,
+          ts: +Date.now(),
+          gif: message,
+          account: this.roomInfo.userName,
+          sender: true,
+          role: EduRoleTypeEnum.teacher,
+          fromRoomName: '',
+          fromRoomUuid: fromRoomUuid
+        })
+        console.log('[chat-message] teacher sent', fromRoomUuid, ' isMain ', fromRoomUuid ? 'true' : 'false')
+      } catch (err) {
+        this.appStore.uiStore.addToast(t('toast.failed_to_send_chat'))
+        console.warn(err)
+      }
+    }
+
+    if (this.roomInfo.userRole === 'assistant') {
+      try {
+        const fromRoomUuid = this.currentStudentRoomUuid
+        const payload = JSON.stringify({
+          content: message,
+          role: EduRoleTypeEnum.assistant,
+          fromRoomUuid: fromRoomUuid,
+          fromRoomName: this.groupClassroomManager?.roomName || '',
+        })
+        await this.largeClassroomManager?.userService.sendRoomChatMessage(payload)
+        await this.groupClassroomManager?.userService.sendRoomChatMessage(payload)
+        this.addChatMessage({
+          id: this.userUuid,
+          ts: +Date.now(),
+          gif: message,
+          account: this.roomInfo.userName,
+          sender: true,
+          role: EduRoleTypeEnum.assistant,
+          fromRoomName: this.groupClassroomManager?.roomName || '',
+          fromRoomUuid: fromRoomUuid,
+        })
+        console.log('[chat-message] assistant sent', fromRoomUuid)
+      } catch (err) {
+        this.appStore.uiStore.addToast(t('toast.failed_to_send_chat'))
+        console.warn(err)
+      }
+    }
+  }
+
+  @action
   async sendMessage(message: any) {
 
     const fromRoomUuid = this.groupClassroomManager.roomUuid
@@ -789,6 +847,40 @@ export class BreakoutRoomStore extends SimpleInterval {
       }
     }
   }
+
+  @action
+  async sendGifMessage(message: any) {
+
+    const fromRoomUuid = this.groupClassroomManager.roomUuid
+    const payload = JSON.stringify({
+      content: message,
+      role: EduRoleTypeEnum.student,
+      fromRoomUuid: this.groupClassroomManager.roomUuid,
+      fromRoomName: this.groupClassroomManager?.roomName || '',
+    })
+    
+    if (this.roomInfo.userRole === 'student') {
+      try {
+        await this.largeClassroomManager?.userService.sendRoomChatMessage(payload)
+        await this.groupClassroomManager?.userService.sendRoomChatMessage(payload)
+        this.addChatMessage({
+          id: this.userUuid,
+          ts: +Date.now(),
+          gif: message,
+          account: this.roomInfo.userName,
+          sender: true,
+          role: EduRoleTypeEnum.student,
+          fromRoomName: this.groupClassroomManager?.roomName || '',
+          fromRoomUuid: fromRoomUuid,
+        })
+        console.log('[chat-message] student sent', fromRoomUuid)
+      } catch (err) {
+        this.appStore.uiStore.addToast(t('toast.failed_to_send_chat'))
+        console.warn(err)
+      }
+    }
+  }
+
 
   @observable
   joined: boolean = false

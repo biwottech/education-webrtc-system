@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.scss';
 import { Link } from 'react-router-dom';
 import { t } from '@/i18n';
+import { IGif } from '@giphy/js-types';
+import { Gif } from '@giphy/react-components';
+import { MessageGif } from './giphy/message-gif';
 interface MessageProps {
   nickname: string
   content: string
   link?: string
+  gif?: IGif,
   sender?: boolean
   children?: any
   ref?: any
@@ -24,12 +28,15 @@ export const Message: React.FC<MessageProps> = ({
   nickname,
   content,
   link,
+  gif,
   sender,
   children,
   ref,
   role,
   className
 }) => {
+
+  const gifId = content.split(':')[1];
 
   return (
   <div ref={ref} className={`message ${sender ? 'sent': 'receive'} ${className ? className : ''}`}>
@@ -39,7 +46,7 @@ export const Message: React.FC<MessageProps> = ({
     <div className="content">
       {link ?
         <Link to={`/replay/record/${link}`} target="_blank">{t('course_recording')}</Link>
-        : content
+        : content.indexOf('gifId:') === 0 ? MessageGif(gifId)  : content
       }
     </div>
     {children ? children : null}
@@ -56,6 +63,7 @@ export const RoomMessage: React.FC<RoomMessageProps> = ({
   roomName,
   content,
   link,
+  gif,
   sender,
   children,
   ref,
@@ -70,9 +78,9 @@ export const RoomMessage: React.FC<RoomMessageProps> = ({
       {!sender && role ? t(roles[role as number]) : ''}{nickname}
     </div>
     <div className="content">
-      {link ?
-        <Link to={`/replay/record/${link}`} target="_blank">{t('course_recording')}</Link>
-        : content
+      {link ? <Link to={`/replay/record/${link}`} target="_blank">{t('course_recording')}</Link> :
+        Object.keys(JSON.parse(content)).includes('url') ? 
+        <Gif gif={JSON.parse(content)} width={100}></Gif> : content
       }
     </div>
     {children ? children : null}

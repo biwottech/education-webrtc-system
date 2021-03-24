@@ -37,6 +37,17 @@ const RoomBoardController = observer((props: any) => {
     }
   }
 
+  const [gif, setGif] = useState(null);
+
+  const sendGifMessage = async () => {
+    await roomStore.sendGifMessage(gif)
+  }
+
+  const handleSendGifMessage = async (gif: any, evt: any) => {
+    await sendGifMessage()
+    setGif(null);
+  }
+
   const userRole = roomStore.roomInfo.userRole
 
   const boardStore = useBoardStore()
@@ -110,6 +121,7 @@ const RoomBoardController = observer((props: any) => {
           muteControl={roomStore.muteControl}
           muteChat={roomStore.mutedChat}
           handleMute={handleMute}
+          handleSendGifMessage={handleSendGifMessage}
           messages={roomStore.roomChatMessages}
           value={value}
           sendMessage={sendMessage}

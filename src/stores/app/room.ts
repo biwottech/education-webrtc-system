@@ -668,6 +668,23 @@ export class RoomStore extends SimpleInterval {
     }
   }
 
+  @action
+  async sendGifMessage(message: any) {
+    try {
+      await this.roomManager?.userService.sendRoomChatMessage(message)
+      this.addChatMessage({
+        id: this.userUuid,
+        ts: +Date.now(),
+        text: message,
+        account: this.roomInfo.userName,
+        sender: true,
+      })
+    } catch (err) {
+      this.appStore.uiStore.addToast(t('toast.failed_to_send_chat'))
+      console.warn(err)
+    }
+  }
+
   @observable
   joined: boolean = false
 

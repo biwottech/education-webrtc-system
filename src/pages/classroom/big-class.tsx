@@ -35,6 +35,16 @@ export const BigClass = observer(() => {
     }
   }
 
+  const [gif, setGif] = useState(null);
+
+  const sendGifMessage = async () => {
+    await roomStore.sendGifMessage(gif)
+  }
+
+  const handleSendGifMessage = async (gif: any, evt: any) => {
+    await sendGifMessage()
+    setGif(null);
+  }
 
   const handleNotice = () => {
     // roomStore.showDialog()
@@ -99,6 +109,7 @@ export const BigClass = observer(() => {
           value={chat}
           messageCount={roomStore.userList.length}
           sendMessage={sendMessage}
+          handleSendGifMessage={handleSendGifMessage}
           muteControl={muteControl}
           muteChat={mutedChat}
           handleMute={handleMute}

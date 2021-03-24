@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {observer} from 'mobx-react'
-import { useBreakoutRoomStore, useBoardStore } from '@/hooks'
+import { useBreakoutRoomStore, useBoardStore, useRoomStore } from '@/hooks'
 import { EduMediaStream } from '@/stores/app/room'
 import { t } from '@/i18n'
 import { ChatPanel } from '@/components/chat/panel'
@@ -31,6 +31,19 @@ export const AssistantChatBoard = observer(() => {
     } else {
       await breakoutRoomStore.muteChat()
     }
+  }
+
+  const roomStore = useRoomStore();
+  
+  const [gif, setGif] = useState(null);
+
+  const sendGifMessage = async () => {
+    await roomStore.sendGifMessage(gif)
+  }
+
+  const handleSendGifMessage = async (gif: any, evt: any) => {
+    await sendGifMessage()
+    setGif(null);
   }
 
   const userRole = breakoutRoomStore.roomInfo.userRole
@@ -104,6 +117,7 @@ export const AssistantChatBoard = observer(() => {
           messages={breakoutRoomStore.roomChatMessages}
           value={value}
           sendMessage={sendMessage}
+          handleSendGifMessage={handleSendGifMessage}
           handleChange={handleChange} />
       </div>
       <div className={`student-container ${breakoutRoomStore.activeTab !== 'first' ? '' : 'hide'}`}>
