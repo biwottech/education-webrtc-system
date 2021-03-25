@@ -5,6 +5,7 @@ import { t } from '@/i18n';
 import {observer} from 'mobx-react'
 import {useRoomStore, useBoardStore} from '@/hooks';
 import { EduMediaStream } from '@/stores/app/room';
+import { EmojiObject } from 'react-twemoji-picker';
 
 const RoomBoardController = observer((props: any) => {
 
@@ -47,6 +48,15 @@ const RoomBoardController = observer((props: any) => {
     await sendGifMessage()
     setGif(null);
   }
+
+  const handleSelectEmoji = (emoji: EmojiObject, evt: KeyboardEvent) => {
+    evt.preventDefault();
+    const emPic = String.fromCodePoint(parseInt(emoji.unicode, 16))
+    const chatWithEmoji = value + emPic;
+    console.log('chat with emoji ', chatWithEmoji);
+    setValue(chatWithEmoji);
+  }
+
 
   const userRole = roomStore.roomInfo.userRole
 
@@ -122,6 +132,7 @@ const RoomBoardController = observer((props: any) => {
           muteChat={roomStore.mutedChat}
           handleMute={handleMute}
           handleSendGifMessage={handleSendGifMessage}
+          handleSelectEmoji={handleSelectEmoji}
           messages={roomStore.roomChatMessages}
           value={value}
           sendMessage={sendMessage}

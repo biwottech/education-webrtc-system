@@ -7,6 +7,8 @@ import { ChatMessage } from '@/utils/types';
 import { t } from '@/i18n';
 import {observer} from 'mobx-react';
 import { GiphyGrid } from './giphy/giphy-grid';
+import { EmojiObject } from 'react-twemoji-picker';
+import { EmojiWindow } from './emoji/emoji-window';
 
 export interface ChatPanelProps {
   canChat: boolean
@@ -18,6 +20,7 @@ export interface ChatPanelProps {
   sendMessage: (evt: any) => void
   handleChange: (evt: any) => void
   handleSendGifMessage: (gif: any, evt: any) => void
+  handleSelectEmoji: (emoji: EmojiObject, evt: KeyboardEvent) => void
   showRoomName?: boolean
 }
 
@@ -31,6 +34,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
   sendMessage,
   handleChange,
   handleSendGifMessage,
+  handleSelectEmoji,
   muteControl,
   muteChat,
   handleMute,
@@ -53,6 +57,8 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
   }, [canChat, muteChat])
 
   const [showGifWindow, setShowGifWindow] = useState(false);
+  
+  const [showEmojiWindow, setShowEmojiWindow] = useState(false);
 
   return (
     <>
@@ -79,9 +85,10 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
           }}>Gif</div>
           <div className={`icon icon-gif`}
           onClick={async (evt: any) => {
-            setShowGifWindow(!showGifWindow);
+            setShowEmojiWindow(!showEmojiWindow);
           }}>&#x1F60A;</div>
         { showGifWindow ? <GiphyGrid onGifClick={handleSendGifMessage} /> : '' }
+        { showEmojiWindow ? EmojiWindow({handleSelectEmoji}) : '' }
         <Input
           disabled={canChat ? false : muteChat}
           value={!showText ? value : ''}

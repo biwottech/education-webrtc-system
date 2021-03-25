@@ -5,6 +5,7 @@ import { EduMediaStream } from '@/stores/app/room'
 import { t } from '@/i18n'
 import { ChatPanel } from '@/components/chat/panel'
 import { StudentList } from '@/components/student-list'
+import { EmojiObject } from 'react-twemoji-picker'
 
 export const StudentChatBoard = observer(() => {
   const breakoutRoomStore = useBreakoutRoomStore()
@@ -29,6 +30,14 @@ export const StudentChatBoard = observer(() => {
   
   const handleChange = (evt: any) => {
     setValue(evt.target.value)
+  }
+
+  const handleSelectEmoji = (emoji: EmojiObject, evt: KeyboardEvent) => {
+    evt.preventDefault();
+    const emPic = String.fromCodePoint(parseInt(emoji.unicode, 16))
+    const chatWithEmoji = value + emPic;
+    console.log('chat with emoji ', chatWithEmoji);
+    setValue(chatWithEmoji);
   }
 
   const {
@@ -117,6 +126,7 @@ export const StudentChatBoard = observer(() => {
           value={value}
           sendMessage={sendMessage}
           handleSendGifMessage={handleSendGifMessage}
+          handleSelectEmoji={handleSelectEmoji}
           handleChange={handleChange} />
       </div>
       <div className={`student-container ${breakoutRoomStore.activeTab !== 'first' ? '' : 'hide'}`}>

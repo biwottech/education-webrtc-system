@@ -151,7 +151,6 @@
     "dexie": "^2.0.4",
     "electron": "7.1.14",
     "electron-builder": "22.5.1",
-    "emoji-js": "^3.5.0",
     "emoji-picker-react": "^2.1.1",
     "eruda": "^2.2.1",
     "eslint-plugin-react": "^7.20.0",
@@ -175,6 +174,7 @@
     "react-resize-observer": "^1.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-twemoji-picker": "github:brianhung/emojipicker",
     "react-use": "^13.24.0",
     "rxjs": "^6.5.3",
     "simple-progress-webpack-plugin": "^1.1.2",
@@ -193,6 +193,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.14",
-    "agora-electron-sdk": "education290"
+    "agora-electron-sdk": "education290",
+    "uninstall": "0.0.0"
   }
 }

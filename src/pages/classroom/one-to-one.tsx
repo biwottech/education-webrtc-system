@@ -5,6 +5,7 @@ import { NetlessBoard } from '@/components/netless-board';
 import { ScreenSharing } from '@/components/screen-sharing';
 import { useRoomStore } from '@/hooks';
 import { observer } from 'mobx-react';
+import { EmojiObject } from 'react-twemoji-picker';
 
 export const OneToOne = observer(() => {
 
@@ -39,6 +40,13 @@ export const OneToOne = observer(() => {
     const payload = `gifId:${gif.id}`;
     console.log('gif payload', payload);
     await roomStore.sendMessage(payload);
+  }
+
+  const handleSelectEmoji = (emoji: EmojiObject, evt: KeyboardEvent) => {
+    evt.preventDefault();
+    const emPic = String.fromCodePoint(parseInt(emoji.unicode, 16))
+    const chatWithEmoji = chat + emPic;
+    setChat(chatWithEmoji);
   }
   
   return (
@@ -83,6 +91,7 @@ export const OneToOne = observer(() => {
             setChat(evt.target.value)
           }}
           handleSendGifMessage={handleSendGifMessage}
+          handleSelectEmoji={handleSelectEmoji}
           messageCount={roomStore.unreadMessageCount}
           muteControl={muteControl}
           muteChat={mutedChat}

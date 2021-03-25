@@ -5,6 +5,7 @@ import { EduMediaStream } from '@/stores/app/room'
 import { t } from '@/i18n'
 import { ChatPanel } from '@/components/chat/panel'
 import { GroupList } from '@/components/group-list'
+import { EmojiObject } from 'react-twemoji-picker'
 
 export const TeacherChatBoard = observer(() => {
   const breakoutRoomStore = useBreakoutRoomStore()
@@ -30,6 +31,14 @@ export const TeacherChatBoard = observer(() => {
   
   const handleChange = (evt: any) => {
     setValue(evt.target.value)
+  }
+
+  const handleSelectEmoji = (emoji: EmojiObject, evt: KeyboardEvent) => {
+    evt.preventDefault();
+    const emPic = String.fromCodePoint(parseInt(emoji.unicode, 16))
+    const chatWithEmoji = value + emPic;
+    console.log('chat with emoji ', chatWithEmoji);
+    setValue(chatWithEmoji);
   }
 
   const {
@@ -140,6 +149,7 @@ export const TeacherChatBoard = observer(() => {
           value={value}
           sendMessage={sendToCurrentRoom}
           handleSendGifMessage={handleSendGifMessage}
+          handleSelectEmoji={handleSelectEmoji}
           handleChange={handleChange} />
       </div>
     </>

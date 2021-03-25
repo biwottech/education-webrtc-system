@@ -1,10 +1,21 @@
 import React from 'react';
-import EmojiPicker from 'emoji-picker-react';
+import { EmojiPicker } from 'react-twemoji-picker';
+import EmojiData from 'react-twemoji-picker/data/twemoji.json';
+import 'react-twemoji-picker/dist/EmojiPicker.css';
+import './emoji-window.scss';
 
-export const EmojiWindow = (props: any) => {
+const emojiData = Object.freeze(EmojiData);
 
-  const { handleEmojiClick } = props;
-
-  return <EmojiPicker onEmojiClick={handleEmojiClick} />   
-  
+export const EmojiWindow = (params: any) => {
+  return  (
+    <div className='emoji-picker-window'>
+      <EmojiPicker emojiData={emojiData} 
+        showNavbar={true} 
+        onEmojiSelect={(emoji, e) => {
+          e.preventDefault();
+          params.handleSelectEmoji(emoji, e);
+        }} 
+        emojiSize={36} />
+    </div>
+  )
 }
