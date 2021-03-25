@@ -25,7 +25,6 @@ export const AssistantChatBoard = observer(() => {
     evt.preventDefault();
     const emPic = String.fromCodePoint(parseInt(emoji.unicode, 16))
     const chatWithEmoji = value + emPic;
-    console.log('chat with emoji ', chatWithEmoji);
     setValue(chatWithEmoji);
   }
 
@@ -42,18 +41,11 @@ export const AssistantChatBoard = observer(() => {
       await breakoutRoomStore.muteChat()
     }
   }
-
-  const roomStore = useRoomStore();
   
-  const [gif, setGif] = useState(null);
-
-  const sendGifMessage = async () => {
-    await roomStore.sendGifMessage(gif)
-  }
-
   const handleSendGifMessage = async (gif: any, evt: any) => {
-    await sendGifMessage()
-    setGif(null);
+    evt?.preventDefault();
+    const payload = `gifId:${gif.id}`;
+    await breakoutRoomStore.sendMessageToCurrentRoom(payload);
   }
 
   const userRole = breakoutRoomStore.roomInfo.userRole

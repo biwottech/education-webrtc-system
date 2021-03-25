@@ -67,10 +67,10 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
           {
             showRoomName ? 
             messages.map((item: ChatMessage, key: number) => (
-              <RoomMessage key={key} roomName={item.fromRoomName} role={item.role} nickname={item.account} content={item.text} link={item.link} sender={item.sender} gif={item.gif} />
+              <RoomMessage key={key} roomName={item.fromRoomName} role={item.role} nickname={item.account} content={item.text} link={item.link} sender={item.sender} />
             )) :
             messages.map((item: ChatMessage, key: number) => (
-              <Message key={key} nickname={item.account} content={item.text} role={item.role} link={item.link} sender={item.sender} gif={item.gif} />
+              <Message key={key} nickname={item.account} content={item.text} role={item.role} link={item.link} sender={item.sender} />
             ))
           }
         </div>   
@@ -87,8 +87,8 @@ export const ChatPanel: React.FC<ChatPanelProps> = observer(({
           onClick={async (evt: any) => {
             setShowEmojiWindow(!showEmojiWindow);
           }}>&#x1F60A;</div>
-        { showGifWindow ? <GiphyGrid onGifClick={handleSendGifMessage} /> : '' }
-        { showEmojiWindow ? EmojiWindow({handleSelectEmoji}) : '' }
+        { showGifWindow ? <GiphyGrid onGifClick={handleSendGifMessage} setShowGifWindow={setShowGifWindow} /> : '' }
+        { showEmojiWindow ? EmojiWindow({handleSelectEmoji, setShowEmojiWindow}) : '' }
         <Input
           disabled={canChat ? false : muteChat}
           value={!showText ? value : ''}

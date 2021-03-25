@@ -36,9 +36,7 @@ export const OneToOne = observer(() => {
 
   const handleSendGifMessage = async (gif: any, evt: any) => {
     evt?.preventDefault();
-    console.log('gif ', gif);
     const payload = `gifId:${gif.id}`;
-    console.log('gif payload', payload);
     await roomStore.sendMessage(payload);
   }
 

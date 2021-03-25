@@ -17,15 +17,10 @@ export const StudentChatBoard = observer(() => {
     setValue('')
   }
   
-  const [gif, setGif] = useState(null);
-
-  const sendGifMessage = async () => {
-    await breakoutRoomStore.sendGifMessage(gif)
-  }
-
   const handleSendGifMessage = async (gif: any, evt: any) => {
-    await sendGifMessage()
-    setGif(null);
+    evt?.preventDefault();
+    const payload = `gifId:${gif.id}`;
+    await breakoutRoomStore.sendMessage(payload);
   }
   
   const handleChange = (evt: any) => {
@@ -36,7 +31,6 @@ export const StudentChatBoard = observer(() => {
     evt.preventDefault();
     const emPic = String.fromCodePoint(parseInt(emoji.unicode, 16))
     const chatWithEmoji = value + emPic;
-    console.log('chat with emoji ', chatWithEmoji);
     setValue(chatWithEmoji);
   }
 

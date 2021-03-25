@@ -44,15 +44,10 @@ export const BigClass = observer(() => {
     setChat(chatWithEmoji);
   }
 
-  const [gif, setGif] = useState(null);
-
-  const sendGifMessage = async () => {
-    await roomStore.sendGifMessage(gif)
-  }
-
   const handleSendGifMessage = async (gif: any, evt: any) => {
-    await sendGifMessage()
-    setGif(null);
+    evt?.preventDefault();
+    const payload = `gifId:${gif.id}`;
+    await roomStore.sendMessage(payload);
   }
 
   const handleNotice = () => {

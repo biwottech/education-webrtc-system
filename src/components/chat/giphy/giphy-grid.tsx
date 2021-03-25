@@ -7,10 +7,11 @@ import { observer } from 'mobx-react';
 import './giphy-grid.scss';
 
 export interface GiphyGridInterface {
-  onGifClick: (gif: any, evt: any) => void
+  onGifClick: (gif: any, evt: any) => void,
+  setShowGifWindow: any
 }
 
-export const GiphyGrid : React.FC<GiphyGridInterface> = observer(({ onGifClick }) => {
+export const GiphyGrid : React.FC<GiphyGridInterface> = observer(({ onGifClick, setShowGifWindow }) => {
   
   const giphyApiKey : string = process.env.REACT_APP_GIPHY_API_KEY || '';
 
@@ -23,7 +24,9 @@ export const GiphyGrid : React.FC<GiphyGridInterface> = observer(({ onGifClick }
             <SearchBar />
             <SuggestionBar />
             <Grid key={searchKey} 
-            columns={3} width={252} fetchGifs={fetchGifs} onGifClick={onGifClick} />
+              columns={3} width={252} fetchGifs={fetchGifs} 
+              onGifClick={(gif, evt) => { onGifClick(gif, evt); setShowGifWindow(false); }} 
+            />
         </>
     )
   }
