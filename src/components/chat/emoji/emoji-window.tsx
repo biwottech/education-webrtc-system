@@ -14,7 +14,7 @@ export const EmojiWindow = (params: any) => {
         onEmojiSelect={(emoji, e) => {
           e.preventDefault();
           params.handleSelectEmoji(emoji, e);
-          //params.setShowEmojiWindow(false); // hide show emoji window
+          // params.setShowEmojiWindow(false); // hide show emoji window
         }} 
         emojiSize={36} />
     </div>
