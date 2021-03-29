@@ -129,8 +129,8 @@ function HomePage() {
                   <CustomIcon className="icon-setting" onClick={handleSetting}/>
                 </span>
               </Tooltip>
-            {/* </div>
-              <LangSelect
+            </div>
+              {/* <LangSelect
                 value={uiStore.language.match(/^zh/) ? 0 : 1}
                 onChange={(evt: any) => {
                   const value = evt.target.value;
@@ -142,8 +142,8 @@ function HomePage() {
                   }
                 }}
                 items={UIStore.languages}>
-              </LangSelect>
-          </div> */}
+              </LangSelect> */}
+          </div>
         </div>
       </div>
       }
