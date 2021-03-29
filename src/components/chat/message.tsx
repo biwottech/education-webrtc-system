@@ -36,7 +36,7 @@ export const Message: React.FC<MessageProps> = ({
   className
 }) => {
 
-  const gifId = content.split(':')[1];
+  const gifId = content?.split(':')[1];
 
   return (
   <div ref={ref} className={`message ${sender ? 'sent': 'receive'} ${className ? className : ''}`}>

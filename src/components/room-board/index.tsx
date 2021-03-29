@@ -38,15 +38,10 @@ const RoomBoardController = observer((props: any) => {
     }
   }
 
-  const [gif, setGif] = useState(null);
-
-  const sendGifMessage = async () => {
-    await roomStore.sendGifMessage(gif)
-  }
-
   const handleSendGifMessage = async (gif: any, evt: any) => {
-    await sendGifMessage()
-    setGif(null);
+    evt?.preventDefault();
+    const payload = `gifId:${gif.id}`;
+    await roomStore.sendMessage(payload);
   }
 
   const handleSelectEmoji = (emoji: EmojiObject, evt: KeyboardEvent) => {

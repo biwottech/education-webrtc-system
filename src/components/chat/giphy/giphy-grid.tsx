@@ -25,7 +25,8 @@ export const GiphyGrid : React.FC<GiphyGridInterface> = observer(({ onGifClick, 
             <SuggestionBar />
             <Grid key={searchKey} 
               columns={3} width={252} fetchGifs={fetchGifs} 
-              onGifClick={(gif, evt) => { onGifClick(gif, evt); setShowGifWindow(false); }} 
+              hideAttribution={true}
+              onGifClick={(gif, evt) => { evt.preventDefault(); onGifClick(gif, evt); setShowGifWindow(false); }} 
             />
         </>
     )
