@@ -119,17 +119,17 @@ function HomePage() {
           </div>
           <div className="setting-container">
             <div className="flex-row">
-              <Tooltip title={t("icon.upload-log")} placement="top">
+              {/* <Tooltip title={t("icon.upload-log")} placement="top">
                 <span>
                   <CustomIcon className={lock ? "icon-loading" : "icon-upload"} onClick={handleUpload}></CustomIcon>
                 </span>
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip title={t("icon.setting")} placement="top">
                 <span>
                   <CustomIcon className="icon-setting" onClick={handleSetting}/>
                 </span>
               </Tooltip>
-            </div>
+            {/* </div>
               <LangSelect
                 value={uiStore.language.match(/^zh/) ? 0 : 1}
                 onChange={(evt: any) => {
@@ -143,12 +143,12 @@ function HomePage() {
                 }}
                 items={UIStore.languages}>
               </LangSelect>
-          </div>
+          </div> */}
         </div>
       </div>
       }
       <div className="custom-card">
-        {!uiStore.isElectron ? <GithubIcon /> : null}
+        {/* {!uiStore.isElectron ? <GithubIcon /> : null} */}
         <div className="flex-item cover">
           {uiStore.isElectron ? 
           <>
