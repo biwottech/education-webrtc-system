@@ -1,5 +1,5 @@
 const BUILD_VERSION = process.env.REACT_APP_BUILD_VERSION as string;
-const build_version = BUILD_VERSION ? BUILD_VERSION : '0.0.1';
+const build_version = BUILD_VERSION ? BUILD_VERSION : '1.0.1';
 
 const en = {
   "unknown": "[unknown]: ",
@@ -197,8 +197,8 @@ const en = {
     'room_type': 'Room Type',
     'room_join': 'Join',
     'short_title': {
-      'title': 'Agora Cloud Class',
-      'subtitle': 'Powered by agora.io, a leading online learning engagement platform',
+      'title': 'eEducation Cloud Class',
+      'subtitle': 'Online learning engagement platform',
     },
     'name_too_long': 'name too long, should <= 20 characters',
     '1v1': 'One to One Classroom',

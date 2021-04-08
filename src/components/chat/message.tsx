@@ -36,7 +36,7 @@ export const Message: React.FC<MessageProps> = ({
   className
 }) => {
 
-  const gifId = content.split(':')[1];
+  const gifId = content?.split(':')[1];
 
   return (
   <div ref={ref} className={`message ${sender ? 'sent': 'receive'} ${className ? className : ''}`}>
@@ -46,7 +46,7 @@ export const Message: React.FC<MessageProps> = ({
     <div className="content">
       {link ?
         <Link to={`/replay/record/${link}`} target="_blank">{t('course_recording')}</Link>
-        : content.indexOf('gifId:') === 0 ? MessageGif(gifId)  : content
+        : content?.indexOf('gifId:') === 0 ? MessageGif(gifId)  : content
       }
     </div>
     {children ? children : null}
