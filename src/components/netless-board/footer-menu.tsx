@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tooltip } from '@material-ui/core';
 import { t } from '@/i18n';
 import { ControlItem } from '../control-item';
@@ -6,6 +6,7 @@ import { useBoardStore, useRoomStore, useBreakoutRoomStore } from '@/hooks';
 import {observer} from 'mobx-react';
 import ScaleController from './scale-controller';
 import { useLocation } from 'react-router-dom';
+import { AudioMixing } from '../audio-mixing';
 
 export const FooterMenu = () => {
 
@@ -21,6 +22,7 @@ export const FooterMenu = () => {
 const BasicSceneFooterMenu = observer(() => {
   const boardStore = useBoardStore()
   const roomStore = useRoomStore()
+  const [showAudioMix, setShowAudioMix] = useState(false);
 
   const current = boardStore.activeFooterItem
 
@@ -31,6 +33,10 @@ const BasicSceneFooterMenu = observer(() => {
   } 
   const handleSharing = async () => {
     await roomStore.startOrStopSharing()
+  }
+  const toggleAudioMixing = async (e: any) => {
+    await console.log('Audio mixing event ');
+    setShowAudioMix(!showAudioMix);
   }
 
   return (
@@ -82,6 +88,17 @@ const BasicSceneFooterMenu = observer(() => {
           />
         </span>
       </Tooltip>
+      <Tooltip title={showAudioMix ? 'play audio mix/effect' : 'stop audio mix /effect'} placement="top">
+        <span>
+          <ControlItem
+            // loading={roomStore.recording}
+            name={showAudioMix ? 'stop_playing' : 'start_playing'}
+            onClick={toggleAudioMixing}
+            active={false}
+          />
+        </span>
+      </Tooltip>
+      {showAudioMix ? <AudioMixing /> : ''}
       <Tooltip title={t(roomStore.sharing ? 'control_items.quit_screen_sharing' : 'control_items.screen_sharing')} placement="top">
         <span>
           <ControlItem
@@ -114,6 +131,7 @@ const BasicSceneFooterMenu = observer(() => {
 const BreakoutClassSceneFooterMenu = observer(() => {
   const boardStore = useBoardStore()
   const roomStore = useBreakoutRoomStore()
+  const [showAudioMix, setShowAudioMix] = useState(false);
 
   const current = boardStore.activeFooterItem
 
@@ -125,7 +143,11 @@ const BreakoutClassSceneFooterMenu = observer(() => {
   const handleSharing = async () => {
     await roomStore.startOrStopSharing()
   }
-
+  const toggleAudioMixing = async (e: any) => {
+    await console.log('Audio mixing event ');
+    setShowAudioMix(!showAudioMix);
+  }
+  
   return (
     roomStore.roomInfo.userRole === 'teacher' ?
     <>
@@ -171,6 +193,16 @@ const BreakoutClassSceneFooterMenu = observer(() => {
             loading={roomStore.recording}
             name={roomStore.recording ? 'icon-loading ' : (roomStore.recordId ? 'stop_recording' : 'recording')}
             onClick={handleRecording}
+            active={false}
+          />
+        </span>
+      </Tooltip>
+      <Tooltip title={showAudioMix ? 'play audio mix/effect' : 'stop audio mix /effect'} placement="top">
+        <span>
+          <ControlItem
+            // loading={roomStore.recording}
+            name={showAudioMix ? 'stop_playing' : 'start_playing'}
+            onClick={toggleAudioMixing}
             active={false}
           />
         </span>
