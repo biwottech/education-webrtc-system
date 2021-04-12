@@ -20,6 +20,7 @@ import { EduCourseState, EduUser, EduStream, EduVideoSourceType, EduRoleType } f
 import { ChatMessage } from '@/utils/types';
 import { t } from '@/i18n';
 import { DialogType } from '@/components/dialog';
+import AgoraRTC, {IBufferSourceAudioTrack, ILocalAudioTrack, ILocalTrack} from 'agora-rtc-sdk-ng';
 
 const delay = 2000
 
@@ -494,6 +495,42 @@ export class RoomStore extends SimpleInterval {
       console.warn(err)
       throw err
     }
+  }
+
+  @action
+  async playAudioMixing() {
+    const audioMixOptions = {
+      source: 'https://github.com/AgoraIO-Community/AgoraWebSDK-NG/blob/master/Demo/audioMixingAndAudioEffect/HeroicAdventure.mp3'
+    };
+    const audioMixingTrack: IBufferSourceAudioTrack = await AgoraRTC.createBufferSourceAudioTrack(audioMixOptions);
+    await this.web.client.publish(audioMixingTrack);
+    audioMixingTrack.play();
+    audioMixingTrack.startProcessAudioBuffer({ loop: true });
+  }
+
+  @action
+  async playAudioEffect() {
+
+  }
+
+  @action
+  async pauseAudioMixing() {
+
+  }
+
+  @action
+  async pauseAudioEffect() {
+
+  }
+
+  @action
+  async stopAudioMixing() {
+
+  }
+
+  @action
+  async stopAudioEffect() {
+
   }
 
   @action

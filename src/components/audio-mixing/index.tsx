@@ -24,6 +24,8 @@ export const AudioMixing = observer(() => {
 
   const handlePlayAudioMix = async () => {
     console.log('play audio mix');
+    await roomStore.playAudioMixing();
+    console.log('started audio mixing');
   };
   const handlePlayAudioEffect = async () => {
     console.log('play audio effect');
