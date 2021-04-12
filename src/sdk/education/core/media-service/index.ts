@@ -240,7 +240,7 @@ export class MediaService extends EventEmitter implements IMediaService {
       this.sdkWrapper.changePlaybackVolume(volume)
     }
   }
-  
+
   async muteLocalVideo(val: boolean): Promise<any> {
     if (this.isWeb) {
       await this.sdkWrapper.muteLocalVideo(val)

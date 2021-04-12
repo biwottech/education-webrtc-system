@@ -78,6 +78,10 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     return this.roomManager.data.localStreamData
   }
 
+  get stream(): EduStream {
+    return this.roomManager.data.localStreamData.stream
+  }
+
   get screenStream(): EduStreamData {
     return this.roomManager.data.localScreenShareStream
   }
