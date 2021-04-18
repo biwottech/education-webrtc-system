@@ -24,6 +24,20 @@ import AgoraRTC, {IBufferSourceAudioTrack, ILocalAudioTrack, ILocalTrack} from '
 
 const delay = 2000
 
+// 
+const  audioMixing = {
+  state: "IDLE", // "IDLE" | "LOADING | "PLAYING" | "PAUSE"
+  duration: 0
+}
+
+const localTracks = {
+  videoTrack: null,
+  audioTrack: null,
+  audioMixingTrack: null,
+  audioEffectTrack: null
+};
+
+// 
 const ms = 500
 
 export const networkQualities: {[key: string]: string} = {
@@ -499,14 +513,20 @@ export class RoomStore extends SimpleInterval {
 
   @action
   async playAudioMixing() {
-    const audioMixOptions = {
-      source: 'https://github.com/AgoraIO-Community/AgoraWebSDK-NG/blob/master/Demo/audioMixingAndAudioEffect/HeroicAdventure.mp3'
+    const options = {
+      source: "http://www.hochmuth.com/mp3/Haydn_Cello_Concerto_D-1.mp3", 
+      cycle: 1, 
+      replace: false, 
+      playTime:0 
     };
-    const audioMixingTrack: IBufferSourceAudioTrack = await AgoraRTC.createBufferSourceAudioTrack(audioMixOptions);
+    
+    const audioMixingTrack: IBufferSourceAudioTrack = await AgoraRTC.createBufferSourceAudioTrack(options);
     await this.web.client.publish(audioMixingTrack);
     audioMixingTrack.play();
     audioMixingTrack.startProcessAudioBuffer({ loop: true });
   }
+
+ 
 
   @action
   async playAudioEffect() {

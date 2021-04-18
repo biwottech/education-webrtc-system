@@ -209,6 +209,7 @@ export class ReplayStore {
         player.pause();
         return;
       }
+      
       if (player.phase === PlayerPhase.WaitingFirstFrame || player.phase === PlayerPhase.Pause) {
         player.play();
         return;

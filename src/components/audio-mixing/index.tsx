@@ -27,12 +27,15 @@ export const AudioMixing = observer(() => {
     await roomStore.playAudioMixing();
     console.log('started audio mixing');
   };
+  
   const handlePlayAudioEffect = async () => {
     console.log('play audio effect');
   }
+
   const handleStopCurrentAudio = async () => {
     console.log('stop audio mix/effect');
   }
+  
   const handlePauseCurrentAudio = async () => {
     console.log('pause audio mix');
   }
