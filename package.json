@@ -85,8 +85,8 @@
     "electron:copy:web": "cross-env REACT_APP_RUNTIME_PLATFORM=electron react-app-rewired build",
     "electron:copy:electron": "cpx ./app/**/*.js ./build",
     "electron:build": "npm run electron:copy:web && npm run electron:copy:electron",
-    "dev": "cross-env TSC_COMPILE_ON_ERROR=false REACT_APP_RUNTIME_PLATFORM=web react-app-rewired start",
-    "build": "cross-env TSC_COMPILE_ON_ERROR=false ENV=production REACT_APP_RUNTIME_PLATFORM=web react-app-rewired build",
+    "dev": "node init && cross-env TSC_COMPILE_ON_ERROR=false REACT_APP_RUNTIME_PLATFORM=web react-app-rewired start",
+    "build": "node init && cross-env TSC_COMPILE_ON_ERROR=false ENV=production REACT_APP_RUNTIME_PLATFORM=web react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "eject": "react-scripts eject",
@@ -196,6 +196,7 @@
     "@typescript-eslint/parser": "^4.21.0",
     "adm-zip": "^0.4.14",
     "agora-electron-sdk": "education290",
+    "agora-rtc-sdk": "^3.5.2",
     "uninstall": "0.0.0"
   }
 }
